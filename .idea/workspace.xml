@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="b6eae727-8edf-47b4-96e4-e2bf96ee7402" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokerGame.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Poker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Poker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PokerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PokerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Poker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Poker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/PokerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/PokerTest.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +62,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.PokerTest.checkProcessHand">
+  <component name="RunManager" selected="JUnit.PokerTest.checkRoyalFlush">
+    <configuration name="PokerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PokerGame" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="PokerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PokerTest.checkProcessHand" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PokerGame" />
       <option name="PACKAGE_NAME" value="" />
@@ -74,16 +87,6 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PokerTest" />
       <option name="METHOD_NAME" value="checkRoyalFlush" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PokerTest.checkStraight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="PokerGame" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="PokerTest" />
-      <option name="METHOD_NAME" value="checkStraight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -111,11 +114,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PokerTest.checkRoyalFlush" />
+        <item itemvalue="JUnit.PokerTest" />
         <item itemvalue="JUnit.PokerTest.checkProcessHand" />
         <item itemvalue="JUnit.PokerTest.onePairPresent" />
-        <item itemvalue="JUnit.PokerTest.checkRoyalFlush" />
         <item itemvalue="JUnit.PokerTest.checkStraightFlush" />
-        <item itemvalue="JUnit.PokerTest.checkStraight" />
       </list>
     </recent_temporary>
   </component>
@@ -144,5 +147,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/PokerTest.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

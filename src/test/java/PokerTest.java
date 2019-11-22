@@ -1,11 +1,13 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.Assert.assertFalse;
+
+
 public class PokerTest {
     @Test
     public void oneHand() {
@@ -219,7 +221,7 @@ public class PokerTest {
         newHand.add("AH");
 
         Poker newPoker = new Poker(newHand);
-        assertTrue(newPoker.checkFlush());
+        assertTrue(newPoker.isFlush());
         assertEquals(14000000, newPoker.getMaxScore());
 
         ArrayList<String> hand = new ArrayList<String>();
@@ -230,7 +232,7 @@ public class PokerTest {
         hand.add("3C");
 
         Poker poker = new Poker(hand);
-        assertFalse(poker.checkFlush());
+        assertFalse(poker.isFlush());
         assertEquals(0, poker.getMaxScore());
     }
 
@@ -244,7 +246,7 @@ public class PokerTest {
         newHand.add("QH");
 
         Poker newPoker = new Poker(newHand);
-        assertTrue(newPoker.checkStraight());
+        assertTrue(newPoker.isStraight());
         assertEquals(1300000, newPoker.getMaxScore());
 
         ArrayList<String> hand = new ArrayList<String>();
@@ -255,13 +257,17 @@ public class PokerTest {
         hand.add("4H");
 
         Poker poker = new Poker(hand);
-        assertFalse(poker.checkStraight());
+        assertFalse(poker.isStraight());
         assertEquals(0, poker.getMaxScore());
     }
 
     @Test
-    public void checkStraightFlush() {
-        ArrayList<String> newHand = new ArrayList<String>();
+    void checkStraightFlush() {
+
+        Poker hand = Poker.aHandOfPokerWith("10H 9H 8H 6H 7H");
+        assertThat(Poker.aHandOfPokerWith("10H 9H 8H 6H 7H").checkStraightFlush()).isEqualTo();
+
+        ArrayList<String> newHand = new ArrayList();
         newHand.add("10H");
         newHand.add("9H");
         newHand.add("8H");
@@ -272,7 +278,7 @@ public class PokerTest {
         assertTrue(newPoker.checkStraightFlush());
         assertEquals(100000000, newPoker.getMaxScore());
 
-        ArrayList<String> hand = new ArrayList<String>();
+        ArrayList<String> hand = new ArrayList();
         hand.add("2H");
         hand.add("7D");
         hand.add("5H");
@@ -297,16 +303,16 @@ public class PokerTest {
         assertTrue(newPoker.checkRoyalFlush());
         assertEquals(1400000001, newPoker.getMaxScore());
 
-//        ArrayList<String> hand = new ArrayList<String>();
-//        hand.add("2H");
-//        hand.add("7D");
-//        hand.add("5H");
-//        hand.add("6S");
-//        hand.add("4H");
-//
-//        Poker poker = new Poker(hand);
-//        assertFalse(poker.checkStraightFlush());
-//        assertEquals(0, poker.getMaxScore());
+        ArrayList<String> hand = new ArrayList<String>();
+        hand.add("2H");
+        hand.add("7D");
+        hand.add("5H");
+        hand.add("6S");
+        hand.add("4H");
+
+        Poker poker = new Poker(hand);
+        assertFalse(poker.checkStraightFlush());
+        assertEquals(0, poker.getMaxScore());
     }
 
     @Test
@@ -330,6 +336,29 @@ public class PokerTest {
 
         Poker poker = new Poker(otherHand);
         assertEquals(14000000, poker.processHand());
+    }
+
+    @Test
+    public void checkProcessHandWithStraight() {
+        ArrayList<String> newHand = new ArrayList<String>();
+        newHand.add("5S");
+        newHand.add("6H");
+        newHand.add("7D");
+        newHand.add("8H");
+        newHand.add("9H");
+
+        Poker newPoker = new Poker(newHand);
+        assertEquals(900000, newPoker.processHand());
+
+        ArrayList<String> otherHand = new ArrayList<String>();
+        otherHand.add("2H");
+        otherHand.add("2D");
+        otherHand.add("4H");
+        otherHand.add("5S");
+        otherHand.add("6C");
+
+        Poker poker = new Poker(otherHand);
+        assertEquals(20, poker.processHand());
     }
 }
 
