@@ -1,32 +1,28 @@
-import java.lang.reflect.Array;
+import classes.Hand;
+import lombok.*;
+
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Poker {
-    ArrayList<String> hand;
-    ArrayList<Integer> potentialScores;
+@Data
+public class PokerGame {
+    private Hand hand;
+    private ArrayList<Integer> potentialScores;
 
-    public Poker(ArrayList<String> hand) {
+    public PokerGame(Hand hand) {
         this.hand = hand;
-        this.potentialScores = new ArrayList<>();
-        this.potentialScores.add(0);
+        this.potentialScores = new ArrayList<>(Collections.singletonList(0));
     }
 
-    public ArrayList<String> getBestHand(){
-        return this.hand;
-    }
-
-    public String highestCard(){
-        String bestCard = "";
-        ArrayList<Integer>  cardValues = getCardValues(hand);
+    public String highestCard() {
+        ArrayList<Integer> cardValues = getCardValues(hand.getCards());
         int maxValue = cardValues.stream().max(Integer::compare).get();
-        int maxCardIndex =  cardValues.indexOf(maxValue);
-        bestCard = hand.get(maxCardIndex);
+        int maxCardIndex = cardValues.indexOf(maxValue);
+        String bestCard = hand.getCards().get(maxCardIndex);
         this.potentialScores.add(maxValue);
-        return  bestCard;
+        return bestCard;
     }
 
-    public ArrayList<Integer> getCardValues(ArrayList<String> handArray){
+    public ArrayList<Integer> getCardValues(ArrayList<String> handArray) {
         Map<String, Integer> faceCardMap = new HashMap<>();
         faceCardMap.put("1", 10);
         faceCardMap.put("J", 11);
@@ -36,22 +32,26 @@ public class Poker {
 
         ArrayList<Integer> cardValues = new ArrayList<Integer>();
 
-        for (String card: handArray) {
+        for (String card : handArray) {
             String firstCharacter = card.split("")[0];
-            if (firstCharacter.equals("J") || firstCharacter.equals("Q")|| firstCharacter.equals("K") || firstCharacter.equals("A") ){
+            if (firstCharacter.equals("J") ||
+                    firstCharacter.equals("Q") ||
+                    firstCharacter.equals("K") ||
+                    firstCharacter.equals("A")) {
                 cardValues.add(faceCardMap.get(firstCharacter));
             } else if (firstCharacter.equals("1")) {
                 cardValues.add(faceCardMap.get(firstCharacter));
             } else {
                 cardValues.add(Integer.parseInt(firstCharacter));
             }
-        };
+        }
+        ;
         return cardValues;
     }
 
-    public ArrayList<String> getCardSuit(ArrayList<String> handArray){
+    public ArrayList<String> getCardSuit(ArrayList<String> handArray) {
         ArrayList<String> cardSuits = new ArrayList<String>();
-        for (String card: handArray) {
+        for (String card : handArray) {
             String secondCharacter = card.split("")[1];
             if (secondCharacter.equals("0")) {
                 cardSuits.add(card.split("")[2]);
@@ -65,8 +65,8 @@ public class Poker {
     public ArrayList<String> onePairPresent(ArrayList<String> hand) {
         ArrayList<String> pairReturned = new ArrayList<String>();
         int score = 0;
-        ArrayList<Integer>  cardValues = getCardValues(hand);
-        for (Integer cardValue: cardValues) {
+        ArrayList<Integer> cardValues = getCardValues(hand);
+        for (Integer cardValue : cardValues) {
             if (Collections.frequency(cardValues, cardValue) == 2) {
                 score = cardValue * 10;
                 pairReturned.add(hand.get(cardValues.indexOf(cardValue)));
@@ -76,16 +76,18 @@ public class Poker {
         }
         this.potentialScores.add(score);
         return pairReturned;
-    };
+    }
 
-    public ArrayList<String> twoPairsPresent(){
+    ;
+
+    public ArrayList<String> twoPairsPresent() {
         ArrayList<String> pairReturned;
-        ArrayList<String> copyHand = (ArrayList<String>) hand.clone();
-        ArrayList<String> firstPair = onePairPresent(copyHand);
+        Hand copyHand = hand;
+        ArrayList<String> firstPair = onePairPresent(copyHand.getCards());
         if (firstPair.size() != 0) {
-            copyHand.remove(firstPair.get(0));
-            copyHand.remove(firstPair.get(1));
-            ArrayList<String> secondPair = onePairPresent(copyHand);
+            copyHand.getCards().remove(firstPair.get(0));
+            copyHand.getCards().remove(firstPair.get(1));
+            ArrayList<String> secondPair = onePairPresent(copyHand.getCards());
             firstPair.addAll(secondPair);
             pairReturned = firstPair;
             if (pairReturned.size() == 4) {
@@ -100,8 +102,8 @@ public class Poker {
     public boolean threeOfAKindPresent() {
         int score = 0;
         boolean isThreeOfAKind = false;
-        ArrayList<Integer>  cardValues = getCardValues(hand);
-        for (Integer cardValue: cardValues) {
+        ArrayList<Integer> cardValues = getCardValues(hand.getCards());
+        for (Integer cardValue : cardValues) {
             if (Collections.frequency(cardValues, cardValue) == 3) {
                 score = cardValue * 1000;
                 isThreeOfAKind = true;
@@ -115,8 +117,8 @@ public class Poker {
     public boolean fourOfAKindPresent() {
         int score = 0;
         boolean isFourOfAKind = false;
-        ArrayList<Integer>  cardValues = getCardValues(hand);
-        for (Integer cardValue: cardValues) {
+        ArrayList<Integer> cardValues = getCardValues(hand.getCards());
+        for (Integer cardValue : cardValues) {
             if (Collections.frequency(cardValues, cardValue) == 4) {
                 score = cardValue * 10000000;
                 isFourOfAKind = true;
@@ -129,14 +131,11 @@ public class Poker {
 
     public boolean fullHousePresent() {
         boolean isFullHouse = false;
-        ArrayList<String> copyHand = (ArrayList<String>) hand.clone();
-        System.out.println("JAMES");
-        System.out.println(copyHand);
-        ArrayList<String> firstPair = onePairPresent(copyHand);
-        if (!onePairPresent(copyHand).isEmpty()) {
-            System.out.println("HELLO");
-            copyHand.remove(firstPair.get(0));
-            copyHand.remove(firstPair.get(1));
+        Hand copyHand = hand;
+        ArrayList<String> firstPair = onePairPresent(copyHand.getCards());
+        if (!onePairPresent(copyHand.getCards()).isEmpty()) {
+            copyHand.getCards().remove(firstPair.get(0));
+            copyHand.getCards().remove(firstPair.get(1));
             if (this.threeOfAKindPresent()) {
                 this.potentialScores.add((this.getMaxScore()) * 1000);
                 isFullHouse = true;
@@ -145,10 +144,10 @@ public class Poker {
         return isFullHouse;
     }
 
-    public boolean checkFlush(){
+    public boolean checkFlush() {
         boolean isFlush = false;
-        ArrayList<String> suitsArray = getCardSuit(hand);
-        ArrayList<Integer> valuesArray = getCardValues(hand);
+        ArrayList<String> suitsArray = getCardSuit(hand.getCards());
+        ArrayList<Integer> valuesArray = getCardValues(hand.getCards());
         if (Collections.frequency(suitsArray, suitsArray.get(0)) == 5) {
             isFlush = true;
             int score = valuesArray.stream().max(Integer::compare).get();
@@ -159,14 +158,11 @@ public class Poker {
 
     public boolean checkStraight() {
         boolean isStraight = false;
-        ArrayList<Integer> valuesArray = getCardValues(hand);
-        System.out.println(valuesArray);
+        ArrayList<Integer> valuesArray = getCardValues(hand.getCards());
         int maxVal = valuesArray.stream().max(Integer::compare).get();
         int minVal = valuesArray.stream().min(Integer::compare).get();
-        System.out.println(maxVal);
-        System.out.println(minVal);
 
-        if ((maxVal-minVal) == 4 ) {
+        if ((maxVal - minVal) == 4) {
             isStraight = true;
             this.potentialScores.add(maxVal * 100000);
         }
@@ -177,7 +173,7 @@ public class Poker {
         boolean isStraightFlush = false;
         if (this.checkFlush() && this.checkStraight()) {
             isStraightFlush = true;
-            ArrayList<Integer> valuesArray = getCardValues(hand);
+            ArrayList<Integer> valuesArray = getCardValues(hand.getCards());
             int maxVal = valuesArray.stream().max(Integer::compare).get();
             this.potentialScores.add(maxVal * 10000000);
         }
@@ -186,11 +182,8 @@ public class Poker {
 
     public boolean checkRoyalFlush() {
         boolean isRoyalFlush = false;
-        System.out.println(this.checkFlush());
-        System.out.println(this.checkStraight());
-        System.out.println(this.checkStraightFlush());
         if (this.checkStraightFlush()) {
-            ArrayList<Integer> valuesArray = getCardValues(hand);
+            ArrayList<Integer> valuesArray = getCardValues(hand.getCards());
             int totalVal = valuesArray.stream().mapToInt(i -> i).sum();
             if (totalVal == 60) {
                 isRoyalFlush = true;
@@ -201,14 +194,12 @@ public class Poker {
     }
 
     public int getMaxScore() {
-        System.out.println(this.potentialScores);
-        int highestScore = this.potentialScores.stream().max(Integer::compare).get();
-        return highestScore;
+        return this.potentialScores.stream().max(Integer::compare).get();
     }
 
     public int processHand() {
         this.highestCard();
-        this.onePairPresent(hand);
+        this.onePairPresent(hand.getCards());
         this.twoPairsPresent();
         this.threeOfAKindPresent();
         this.checkStraight();
