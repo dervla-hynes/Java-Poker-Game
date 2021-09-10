@@ -1,3 +1,4 @@
+import classes.Card;
 import classes.Hand;
 import org.junit.Test;
 
@@ -8,52 +9,90 @@ import static org.junit.Assert.*;
 public class PokerGameTest {
     @Test
     public void oneHand() {
-        Hand hand = createNewHand("4S", "5S", "7H", "8D", "JC");
+        Card cardOne = createCard("4", "S");
+        Card cardTwo = createCard("5", "S");
+        Card cardThree = createCard("7", "H");
+        Card cardFour = createCard("8", "D");
+        Card cardFive = createCard("J", "C");
+        Hand hand = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         assertEquals(hand, new PokerGame(hand).getHand());
     }
 
     @Test
     public void highestCardWins() {
-        Hand handWithHighestEight = createNewHand("4S", "5S", "7H", "8D", "3C");
-        String highestCard = "8D";
-        assertEquals(highestCard, new PokerGame(handWithHighestEight).highestCard());
+        Card cardOne = createCard("4", "S");
+        Card cardTwo = createCard("5", "S");
+        Card cardThree = createCard("7", "H");
+        Card cardFour = createCard("8", "D");
+        Card cardFive = createCard("3", "C");
+        Hand handWithHighestEight = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
 
-        Hand handWithHighestJack = createNewHand("4S", "5S", "7H", "8D", "JC");
+        String highestCard = "8D";
+        assertEquals(highestCard, new PokerGame(handWithHighestEight).highestCard().toString());
+
+        Card cardSix = createCard("J", "C");
+        Hand handWithHighestJack = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardSix);
+
         highestCard = "JC";
-        assertEquals(highestCard, new PokerGame(handWithHighestJack).highestCard());
+        assertEquals(highestCard, new PokerGame(handWithHighestJack).highestCard().toString());
     }
 
     @Test
     public void onePairPresent() {
-        Hand handWithOnePair = createNewHand("4C", "7H", "4D", "8D", "JC");
-        ArrayList<String> pairOfFours = new ArrayList<String>(Arrays.asList("4C", "4D"));
+        Card cardOne = createCard("4", "C");
+        Card cardTwo = createCard("7", "H");
+        Card cardThree = createCard("4", "D");
+        Card cardFour = createCard("8", "D");
+        Card cardFive = createCard("J", "C");
+        Hand handWithOnePair = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
+        ArrayList<Card> pairOfFours = new ArrayList<>(Arrays.asList(cardOne, cardThree));
 
         assertEquals(pairOfFours, new PokerGame(handWithOnePair).onePairPresent(handWithOnePair.getCards()));
 
-        Hand differentHandWithOnePair = createNewHand("4C", "7H", "5D", "QD", "QC");
-        ArrayList<String> differentPair = new ArrayList<String>(Arrays.asList("QD", "QC"));
+        Card cardSix = createCard("5", "D");
+        Card cardSeven = createCard("Q", "D");
+        Card cardEight = createCard("Q", "C");
+        Hand differentHandWithOnePair = createNewHand(cardOne, cardTwo, cardSix, cardSeven, cardEight);
 
-        assertEquals(differentPair, new PokerGame(differentHandWithOnePair).onePairPresent(differentPair));
+        ArrayList<Card> differentPair = new ArrayList<>(Arrays.asList(cardSeven, cardEight));
+
+        assertEquals(differentPair, new PokerGame(differentHandWithOnePair).onePairPresent(differentHandWithOnePair.getCards()));
     }
 
     @Test
     public void onePairNotPresent() {
-        Hand handWithNoPair = createNewHand("4C", "7H", "5D", "KD", "QC");
-        ArrayList<String> noPair = new ArrayList<String>();
+        Card cardOne = createCard("4", "C");
+        Card cardTwo = createCard("7", "H");
+        Card cardThree = createCard("5", "D");
+        Card cardFour = createCard("K", "D");
+        Card cardFive = createCard("Q", "C");
+        Hand handWithNoPair = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
+        ArrayList<Card> noPair = new ArrayList<>();
 
         assertEquals(noPair, new PokerGame(handWithNoPair).onePairPresent(handWithNoPair.getCards()));
     }
 
     @Test
     public void TwoPairsPresent() {
-        Hand handWithTwoPairs = createNewHand("4D", "4C", "6S", "6D", "3C");
-        ArrayList<String> twoPairs = new ArrayList<String>(Arrays.asList("4D", "4C", "6S", "6D"));
+        Card cardOne = createCard("4", "D");
+        Card cardTwo = createCard("4", "C");
+        Card cardThree = createCard("6", "S");
+        Card cardFour = createCard("6", "D");
+        Card cardFive = createCard("3", "C");
+        Hand handWithTwoPairs = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
+        ArrayList<Card> twoPairs = new ArrayList<>(Arrays.asList(cardOne, cardTwo, cardThree, cardFour));
         PokerGame poker = new PokerGame(handWithTwoPairs);
 
         assertEquals(twoPairs, poker.twoPairsPresent());
         assertEquals(600, poker.getMaxScore());
 
-        Hand handWithOnlyOnePair = createNewHand("4D", "4C", "6S", "9D", "3C");
+        Card cardSix = createCard("9", "D");
+        Hand handWithOnlyOnePair = createNewHand(cardOne, cardTwo, cardThree, cardSix, cardFive);
+
         PokerGame newPoker = new PokerGame(handWithOnlyOnePair);
 
         assertNull(newPoker.twoPairsPresent());
@@ -62,13 +101,23 @@ public class PokerGameTest {
 
     @Test
     public void ThreeOfAKindPresent() {
-        Hand handWithThreeOfAKind = createNewHand("4D", "4C", "4S", "6D", "3C");
+        Card cardOne = createCard("4", "D");
+        Card cardTwo = createCard("4", "C");
+        Card cardThree = createCard("4", "S");
+        Card cardFour = createCard("6", "D");
+        Card cardFive = createCard("3", "C");
+        Hand handWithThreeOfAKind = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         PokerGame poker = new PokerGame(handWithThreeOfAKind);
 
         assertTrue(poker.threeOfAKindPresent());
         assertEquals(4000, poker.getMaxScore());
 
-        Hand handWithOtherThreeOfAKind = createNewHand("KD", "KC", "KS", "6D", "3C");
+        Card cardSix = createCard("K", "D");
+        Card cardSeven = createCard("K", "C");
+        Card cardEight = createCard("K", "S");
+        Hand handWithOtherThreeOfAKind = createNewHand(cardSix, cardSeven, cardEight, cardFour, cardFive);
+
         PokerGame otherPoker = new PokerGame(handWithOtherThreeOfAKind);
 
         assertTrue(otherPoker.threeOfAKindPresent());
@@ -77,7 +126,12 @@ public class PokerGameTest {
 
     @Test
     public void FourOfAKindPresent() {
-        Hand handWithFourOfAKind = createNewHand("4D", "4C", "4S", "4H", "3C");
+        Card cardOne = createCard("4", "D");
+        Card cardTwo = createCard("4", "C");
+        Card cardThree = createCard("4", "S");
+        Card cardFour = createCard("4", "H");
+        Card cardFive = createCard("3", "C");
+        Hand handWithFourOfAKind = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
         PokerGame poker = new PokerGame(handWithFourOfAKind);
 
         assertTrue(poker.fourOfAKindPresent());
@@ -86,13 +140,21 @@ public class PokerGameTest {
 
     @Test
     public void FullHousePresent() {
-        Hand handWithFullHouse = createNewHand("4D", "4C", "4S", "3H", "3C");
+        Card cardOne = createCard("4", "D");
+        Card cardTwo = createCard("4", "C");
+        Card cardThree = createCard("4", "S");
+        Card cardFour = createCard("3", "H");
+        Card cardFive = createCard("3", "C");
+        Hand handWithFullHouse = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         PokerGame poker = new PokerGame(handWithFullHouse);
 
         assertTrue(poker.fullHousePresent());
         assertEquals(4000000, poker.getMaxScore());
 
-        Hand handWithNoFullHouse = createNewHand("4D", "4C", "4S", "2H", "3C");
+        Card cardSix = createCard("2", "H");
+        Hand handWithNoFullHouse = createNewHand(cardOne, cardTwo, cardThree, cardSix, cardFive);
+
         PokerGame newPoker = new PokerGame(handWithNoFullHouse);
 
         assertFalse(newPoker.fullHousePresent());
@@ -101,28 +163,38 @@ public class PokerGameTest {
 
     @Test
     public void checkCardSuits() {
-        Hand hand = createNewHand("4D", "4C", "4S", "3H", "3C");
+        Card cardOne = createCard("4", "D");
+        Card cardTwo = createCard("4", "C");
+        Card cardThree = createCard("4", "S");
+        Card cardFour = createCard("3", "H");
+        Card cardFive = createCard("3", "C");
+        Hand hand = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         ArrayList<String> suits = new ArrayList<String>(Arrays.asList("D", "C", "S", "H", "C"));
-        PokerGame poker = new PokerGame(hand);
 
-        assertEquals(suits, poker.getCardSuit(poker.getHand().getCards()));
-
-        Hand newHand = createNewHand("2H", "4H", "5H", "9H", "3H");
-        ArrayList<String> newSuits = new ArrayList<String>(Arrays.asList("H", "H", "H", "H", "H"));
-        PokerGame newPoker = new PokerGame(newHand);
-
-        assertEquals(newSuits, newPoker.getCardSuit(newPoker.getHand().getCards()));
+        assertEquals(suits, hand.getCardSuits());
     }
 
     @Test
     public void checkFlush() {
-        Hand handWithFlush = createNewHand("KH", "4H", "10H", "9H", "AH");
+        Card cardOne = createCard("K", "H");
+        Card cardTwo = createCard("4", "H");
+        Card cardThree = createCard("10", "H");
+        Card cardFour = createCard("9", "H");
+        Card cardFive = createCard("A", "H");
+        Hand handWithFlush = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         PokerGame newPoker = new PokerGame(handWithFlush);
 
         assertTrue(newPoker.checkFlush());
         assertEquals(1400000, newPoker.getMaxScore());
 
-        Hand handWithNoFlush = createNewHand("2D", "4H", "5S", "9H", "3C");
+        Card cardSix = createCard("2", "D");
+        Card cardSeven = createCard("4", "H");
+        Card cardEight = createCard("5", "S");
+        Card cardNine = createCard("9", "H");
+        Hand handWithNoFlush = createNewHand(cardSix, cardSeven, cardEight, cardNine, cardFive);
+
         PokerGame poker = new PokerGame(handWithNoFlush);
 
         assertFalse(poker.checkFlush());
@@ -131,13 +203,25 @@ public class PokerGameTest {
 
     @Test
     public void checkStraight() {
-        Hand handWithStraight = createNewHand("9H", "10D", "JH", "KS", "QH");
+        Card cardOne = createCard("9", "H");
+        Card cardTwo = createCard("10", "D");
+        Card cardThree = createCard("J", "H");
+        Card cardFour = createCard("K", "S");
+        Card cardFive = createCard("Q", "H");
+        Hand handWithStraight = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         PokerGame newPoker = new PokerGame(handWithStraight);
 
         assertTrue(newPoker.checkStraight());
         assertEquals(130000, newPoker.getMaxScore());
 
-        Hand handWithNoStraight = createNewHand("2H", "7D", "5H", "6S", "4H");
+        Card cardSix = createCard("2", "H");
+        Card cardSeven = createCard("7", "D");
+        Card cardEight = createCard("5", "H");
+        Card cardNine = createCard("6", "S");
+        Card cardTen = createCard("4", "H");
+        Hand handWithNoStraight = createNewHand(cardSix, cardSeven, cardEight, cardNine, cardTen);
+
         PokerGame poker = new PokerGame(handWithNoStraight);
 
         assertFalse(poker.checkStraight());
@@ -146,13 +230,25 @@ public class PokerGameTest {
 
     @Test
     public void checkStraightFlush() {
-        Hand handWithStraightFlush = createNewHand("10H", "9H", "8H", "6H", "7H");
+        Card cardOne = createCard("10", "H");
+        Card cardTwo = createCard("9", "H");
+        Card cardThree = createCard("8", "H");
+        Card cardFour = createCard("6", "H");
+        Card cardFive = createCard("7", "H");
+        Hand handWithStraightFlush = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         PokerGame newPoker = new PokerGame(handWithStraightFlush);
 
         assertTrue(newPoker.checkStraightFlush());
         assertEquals(1000000000, newPoker.getMaxScore());
 
-        Hand handWithNoStraightFlush = createNewHand("2H", "7D", "5H", "6S", "4H");
+        Card cardSix = createCard("2", "H");
+        Card cardSeven = createCard("7", "D");
+        Card cardEight = createCard("5", "H");
+        Card cardNine = createCard("6", "S");
+        Card cardTen = createCard("4", "H");
+        Hand handWithNoStraightFlush = createNewHand(cardSix, cardSeven, cardEight, cardNine, cardTen);
+
         PokerGame poker = new PokerGame(handWithNoStraightFlush);
 
         assertFalse(poker.checkStraightFlush());
@@ -161,13 +257,25 @@ public class PokerGameTest {
 
     @Test
     public void checkRoyalFlush() {
-        Hand handWithRoyalFlush = createNewHand("10H", "JH", "AH", "KH", "QH");
+        Card cardOne = createCard("10", "H");
+        Card cardTwo = createCard("J", "H");
+        Card cardThree = createCard("A", "H");
+        Card cardFour = createCard("K", "H");
+        Card cardFive = createCard("Q", "H");
+        Hand handWithRoyalFlush = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
+
         PokerGame newPoker = new PokerGame(handWithRoyalFlush);
 
         assertTrue(newPoker.checkRoyalFlush());
         assertEquals(1400000001, newPoker.getMaxScore());
 
-        Hand handWithNoRoyalFlush = createNewHand("2H", "7D", "5H", "6S", "4H");
+        Card cardSix = createCard("2", "H");
+        Card cardSeven = createCard("7", "D");
+        Card cardEight = createCard("5", "H");
+        Card cardNine = createCard("6", "S");
+        Card cardTen = createCard("4", "H");
+        Hand handWithNoRoyalFlush = createNewHand(cardSix, cardSeven, cardEight, cardNine, cardTen);
+
         PokerGame poker = new PokerGame(handWithNoRoyalFlush);
 
         assertFalse(poker.checkStraightFlush());
@@ -176,22 +284,35 @@ public class PokerGameTest {
 
     @Test
     public void checkProcessHand() {
-        Hand hand = createNewHand("10H", "JH", "AH", "KH", "QH");
+        Card cardOne = createCard("10", "H");
+        Card cardTwo = createCard("J", "H");
+        Card cardThree = createCard("A", "H");
+        Card cardFour = createCard("K", "H");
+        Card cardFive = createCard("Q", "H");
+        Hand hand = createNewHand(cardOne, cardTwo, cardThree, cardFour, cardFive);
         PokerGame newPoker = new PokerGame(hand);
 
         assertEquals(1400000001, newPoker.processHand());
     }
 
-    private Hand createNewHand(String cardOne,
-                               String cardTwo,
-                               String cardThree,
-                               String cardFour,
-                               String cardFive) {
-        ArrayList<String> cards = new ArrayList<>(Arrays.asList(cardOne, cardTwo, cardThree, cardFour, cardFive));
+    private Hand createNewHand(Card cardOne,
+                               Card cardTwo,
+                               Card cardThree,
+                               Card cardFour,
+                               Card cardFive) {
+        ArrayList<Card> cards = new ArrayList<>(Arrays.asList(cardOne, cardTwo, cardThree, cardFour, cardFive));
+        ArrayList<Integer> potentialScores = new ArrayList<>(Collections.singletonList(0));
 
         return Hand.builder()
                 .cards(cards)
-                .potentialScores(new ArrayList<>(Collections.singletonList(0)))
+                .potentialScores(potentialScores)
+                .build();
+    }
+
+    private Card createCard(String value, String suit) {
+        return Card.builder()
+                .value(value)
+                .suit(suit)
                 .build();
     }
 }
