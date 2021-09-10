@@ -6,11 +6,9 @@ import java.util.*;
 @Data
 public class PokerGame {
     private Hand hand;
-    private ArrayList<Integer> potentialScores;
 
     public PokerGame(Hand hand) {
         this.hand = hand;
-        this.potentialScores = new ArrayList<>(Collections.singletonList(0));
     }
 
     public String highestCard() {
@@ -18,7 +16,7 @@ public class PokerGame {
         int maxValue = cardValues.stream().max(Integer::compare).get();
         int maxCardIndex = cardValues.indexOf(maxValue);
         String bestCard = hand.getCards().get(maxCardIndex);
-        this.potentialScores.add(maxValue);
+        hand.addToPotentialScores(maxValue);
         return bestCard;
     }
 
@@ -62,19 +60,19 @@ public class PokerGame {
         return cardSuits;
     }
 
-    public ArrayList<String> onePairPresent(ArrayList<String> hand) {
+    public ArrayList<String> onePairPresent(ArrayList<String> handInput) {
         ArrayList<String> pairReturned = new ArrayList<String>();
         int score = 0;
-        ArrayList<Integer> cardValues = getCardValues(hand);
+        ArrayList<Integer> cardValues = getCardValues(handInput);
         for (Integer cardValue : cardValues) {
             if (Collections.frequency(cardValues, cardValue) == 2) {
                 score = cardValue * 10;
-                pairReturned.add(hand.get(cardValues.indexOf(cardValue)));
-                pairReturned.add(hand.get(cardValues.lastIndexOf(cardValue)));
+                pairReturned.add(handInput.get(cardValues.indexOf(cardValue)));
+                pairReturned.add(handInput.get(cardValues.lastIndexOf(cardValue)));
                 break;
             }
         }
-        this.potentialScores.add(score);
+        hand.addToPotentialScores(score);
         return pairReturned;
     }
 
@@ -91,7 +89,7 @@ public class PokerGame {
             firstPair.addAll(secondPair);
             pairReturned = firstPair;
             if (pairReturned.size() == 4) {
-                this.potentialScores.add((this.getMaxScore()) * 10);
+                hand.addToPotentialScores(this.getMaxScore() * 10);
                 return pairReturned;
             } else {
                 return null;
@@ -110,7 +108,7 @@ public class PokerGame {
                 break;
             }
         }
-        this.potentialScores.add(score);
+        hand.addToPotentialScores(score);
         return isThreeOfAKind;
     }
 
@@ -125,7 +123,7 @@ public class PokerGame {
                 break;
             }
         }
-        this.potentialScores.add(score);
+        hand.addToPotentialScores(score);
         return isFourOfAKind;
     }
 
@@ -137,7 +135,7 @@ public class PokerGame {
             copyHand.getCards().remove(firstPair.get(0));
             copyHand.getCards().remove(firstPair.get(1));
             if (this.threeOfAKindPresent()) {
-                this.potentialScores.add((this.getMaxScore()) * 1000);
+                hand.addToPotentialScores(this.getMaxScore() * 1000);
                 isFullHouse = true;
             }
         }
@@ -151,7 +149,7 @@ public class PokerGame {
         if (Collections.frequency(suitsArray, suitsArray.get(0)) == 5) {
             isFlush = true;
             int score = valuesArray.stream().max(Integer::compare).get();
-            this.potentialScores.add(score * 1000000);
+            hand.addToPotentialScores(score * 100000);
         }
         return isFlush;
     }
@@ -164,7 +162,7 @@ public class PokerGame {
 
         if ((maxVal - minVal) == 4) {
             isStraight = true;
-            this.potentialScores.add(maxVal * 100000);
+            hand.addToPotentialScores(maxVal * 10000);
         }
         return isStraight;
     }
@@ -175,7 +173,7 @@ public class PokerGame {
             isStraightFlush = true;
             ArrayList<Integer> valuesArray = getCardValues(hand.getCards());
             int maxVal = valuesArray.stream().max(Integer::compare).get();
-            this.potentialScores.add(maxVal * 10000000);
+            hand.addToPotentialScores(maxVal * 100000000);
         }
         return isStraightFlush;
     }
@@ -187,14 +185,14 @@ public class PokerGame {
             int totalVal = valuesArray.stream().mapToInt(i -> i).sum();
             if (totalVal == 60) {
                 isRoyalFlush = true;
-                this.potentialScores.add(1400000001);
+                hand.addToPotentialScores(1400000001);
             }
         }
         return isRoyalFlush;
     }
 
     public int getMaxScore() {
-        return this.potentialScores.stream().max(Integer::compare).get();
+        return hand.getPotentialScores().stream().max(Integer::compare).get();
     }
 
     public int processHand() {

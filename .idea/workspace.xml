@@ -5,19 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6eae727-8edf-47b4-96e4-e2bf96ee7402" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/classes/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/classes/CardDealer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/classes/Hand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/PokerGameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Poker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PokerGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PokerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Poker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Poker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/PokerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PokerGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PokerGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Hand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PokerGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PokerGameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,41 +69,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PokerGameTest.checkProcessHand" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PokerGameTest.ThreeOfAKindPresent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PokerGame" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PokerGameTest" />
-      <option name="METHOD_NAME" value="checkProcessHand" />
+      <option name="METHOD_NAME" value="ThreeOfAKindPresent" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PokerGameTest.checkRoyalFlush" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PokerGameTest.checkFlush" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PokerGame" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PokerGameTest" />
-      <option name="METHOD_NAME" value="checkRoyalFlush" />
+      <option name="METHOD_NAME" value="checkFlush" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PokerGameTest.oneHand" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PokerGameTest.checkStraight" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PokerGame" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PokerGameTest" />
-      <option name="METHOD_NAME" value="oneHand" />
+      <option name="METHOD_NAME" value="checkStraight" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PokerGameTest.onePairPresent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PokerGameTest.checkStraightFlush" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PokerGame" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PokerGameTest" />
-      <option name="METHOD_NAME" value="onePairPresent" />
+      <option name="METHOD_NAME" value="checkStraightFlush" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -119,10 +112,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.PokerGameTest" />
-        <item itemvalue="JUnit.PokerGameTest.oneHand" />
-        <item itemvalue="JUnit.PokerGameTest.checkProcessHand" />
-        <item itemvalue="JUnit.PokerGameTest.onePairPresent" />
-        <item itemvalue="JUnit.PokerGameTest.checkRoyalFlush" />
+        <item itemvalue="JUnit.PokerGameTest.checkFlush" />
+        <item itemvalue="JUnit.PokerGameTest.ThreeOfAKindPresent" />
+        <item itemvalue="JUnit.PokerGameTest.checkStraightFlush" />
+        <item itemvalue="JUnit.PokerGameTest.checkStraight" />
       </list>
     </recent_temporary>
   </component>
@@ -151,5 +144,16 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/PokerGame.java</url>
+          <line>150</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

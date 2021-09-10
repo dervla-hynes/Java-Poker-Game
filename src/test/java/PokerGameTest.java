@@ -1,8 +1,7 @@
 import classes.Hand;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -121,7 +120,7 @@ public class PokerGameTest {
         PokerGame newPoker = new PokerGame(handWithFlush);
 
         assertTrue(newPoker.checkFlush());
-        assertEquals(14000000, newPoker.getMaxScore());
+        assertEquals(1400000, newPoker.getMaxScore());
 
         Hand handWithNoFlush = createNewHand("2D", "4H", "5S", "9H", "3C");
         PokerGame poker = new PokerGame(handWithNoFlush);
@@ -136,7 +135,7 @@ public class PokerGameTest {
         PokerGame newPoker = new PokerGame(handWithStraight);
 
         assertTrue(newPoker.checkStraight());
-        assertEquals(1300000, newPoker.getMaxScore());
+        assertEquals(130000, newPoker.getMaxScore());
 
         Hand handWithNoStraight = createNewHand("2H", "7D", "5H", "6S", "4H");
         PokerGame poker = new PokerGame(handWithNoStraight);
@@ -151,7 +150,7 @@ public class PokerGameTest {
         PokerGame newPoker = new PokerGame(handWithStraightFlush);
 
         assertTrue(newPoker.checkStraightFlush());
-        assertEquals(100000000, newPoker.getMaxScore());
+        assertEquals(1000000000, newPoker.getMaxScore());
 
         Hand handWithNoStraightFlush = createNewHand("2H", "7D", "5H", "6S", "4H");
         PokerGame poker = new PokerGame(handWithNoStraightFlush);
@@ -192,6 +191,7 @@ public class PokerGameTest {
 
         return Hand.builder()
                 .cards(cards)
+                .potentialScores(new ArrayList<>(Collections.singletonList(0)))
                 .build();
     }
 }
