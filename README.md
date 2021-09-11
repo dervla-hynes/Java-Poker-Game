@@ -1,4 +1,4 @@
-# JAVA PokerGame Game
+# JAVA Poker Game - Test Driven Development
 
 This project is a poker game written in Java, using test driven development.
 The tests drive the functionality of the game.
